@@ -1,0 +1,14 @@
+##RUN EVERY 2 MINUTES
+:local ConName "IPSEC"
+:local HostPing "HOST.COM"
+:local PingCount "4"
+:local pingresult [/ping $HostPing count=$PingCount]
+:if ($pingresult < 4) do={
+	:log info message="IPSEC router unreachable" 
+	:ip ipsec installed-sa flush
+	:delay 30
+	:ip ipsec installed-sa flush
+}
+:if ($pingresult = 4) do={
+	:log info message="IPSEC router check ok"
+}
