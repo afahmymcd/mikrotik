@@ -1,0 +1,3 @@
+#RUN_EVERY_30_SECONDS
+/tool fetch mode=https url="https://www.duckdns.org/update?token=ENTER_TOKEN_HERE&domains=DOMAIN0,DOMAIN1,DOMAIN2&verbose=true&ip=" output=none;
+/tool fetch mode=https url="https://www.duckdns.org/update?token=ENTER_TOKEN_HERE&domains=DOMAIN0,DOMAIN1,DOMAIN2&verbose=true&ip=" output=none;
