@@ -1,0 +1,25 @@
+##RUN EVERY 10 MINUTES - Requires WAN2/backup
+:local WanName "WAN1"
+:local HostPing "8.8.8.8"
+:local PingCount "50"
+:local WanState
+:interface ethernet monitor $WanName once do={ :set WanState $status}
+:local pingresult [/ping $HostPing interface=$WanName count=$PingCount]
+:if ($WanState = "link-ok")  do={
+	:if ($pingresult < 50) do={
+		:log info message="WAN 1 Ping is bad" 
+		:ip dhcp-client disable numbers=0
+		:delay 480
+		:ip dhcp-client enable numbers=0
+	}
+	:if ($pingresult = 50) do={
+			:log info message="<$WanName> is working normally"
+	}
+}
+:if ($WanState != "link-ok")  do={
+		:log info message="<$WanName> is having problems"
+		:interface disable $WanName
+		:delay 480		
+		:interface enable $WanName
+	}
+}
